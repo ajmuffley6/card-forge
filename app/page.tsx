@@ -1,10 +1,26 @@
 import Navbar from "@/components/Navbar";
 
 const categories = [
-  "Rookie Cards",
-  "Autographs",
-  "Vintage Cards",
-  "Rare Inserts",
+  {
+    name: "Rookie Cards",
+    description: "Explore rookie cards in the Card Forge inventory.",
+    href: "/inventory?category=rookies",
+  },
+  {
+    name: "Autographs",
+    description: "Browse signed cards and autograph collectibles.",
+    href: "/inventory?category=autographs",
+  },
+  {
+    name: "Vintage Cards",
+    description: "Explore vintage cards from past eras.",
+    href: "/inventory?category=vintage",
+  },
+  {
+    name: "Rare Inserts",
+    description: "Discover rare inserts, parallels, and short prints.",
+    href: "/inventory?category=inserts",
+  },
 ];
 
 export default function Home() {
@@ -12,66 +28,55 @@ export default function Home() {
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <Navbar />
 
-      <section className="px-10 py-28">
-        <h2 className="text-6xl font-bold max-w-4xl">
+      <section className="px-8 py-28">
+        <h2 className="max-w-4xl text-6xl font-bold">
           Premium trading cards for serious collectors.
         </h2>
 
-        <p className="mt-6 max-w-2xl text-xl text-[var(--muted)] leading-8">
-          Discover rare cards, rookie investments, and collectible
-          treasures curated by Card Forge.
+        <p className="mt-6 max-w-2xl text-xl text-stone-500">
+          Discover rare cards, rookie investments, and collectible treasures
+          curated by Card Forge.
         </p>
 
-        <div className="mt-8 flex gap-4">
-          <button className=" bg-[var(--primary)]
-    text-white
-    px-6
-    py-3
-    rounded-xl
-    font-semibold
-    shadow-md
-    hover:brightness-110
-    transition">
+        <div className="mt-10 flex gap-4">
+          <a
+            href="/inventory"
+            className="rounded-lg bg-blue-800 px-6 py-3 font-bold text-white shadow hover:bg-blue-900"
+          >
             Browse Inventory
-          </button>
+          </a>
 
-          <button className="border
-    border-[var(--border)]
-    bg-white
-    px-6
-    py-3
-    rounded-xl
-    font-medium
-    hover:border-[var(--primary)]
-    hover:text-[var(--primary)]
-    transition
-">
+          <a
+            href="/about"
+            className="rounded-lg border border-stone-300 bg-white px-6 py-3 font-semibold text-stone-800 hover:bg-stone-50"
+          >
             Learn More
-          </button>
+          </a>
         </div>
       </section>
 
-      <section className="px-8 py-12">
-        <h3 className="text-3xl font-bold mb-8">
+      <section className="px-8 pb-16">
+        <h2 className="text-3xl font-bold">
           Featured Collections
-        </h3>
+        </h2>
 
-        <div className="grid md:grid-cols-4 gap-6">
+        <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {categories.map((category) => (
-            <div
-              key={category}
-              className="bg-[var(--surface)]
-border border-[var(--border)] rounded-2xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+            <a
+              key={category.name}
+              href={category.href}
+              className="rounded-xl border bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
             >
-              <h4 className="text-xl font-semibold text-[var(--foreground)]">
-                {category}
-              </h4>
-               <div className="mt-3 mb-4 h-1 w-12 rounded-full bg-[var(--accent)]" />
-               
-              <p className="mt-3 text-[var(--muted)]">
-                Explore premium collectibles.
+              <h3 className="text-xl font-bold">
+                {category.name}
+              </h3>
+
+              <div className="mt-3 h-1 w-12 rounded-full bg-[var(--accent)]" />
+
+              <p className="mt-4 text-stone-500">
+                {category.description}
               </p>
-            </div>
+            </a>
           ))}
         </div>
       </section>
