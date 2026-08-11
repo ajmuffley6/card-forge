@@ -27,6 +27,7 @@ export default function AddCardPage() {
   const [rareInsert, setRareInsert] = useState(false);
   const [memorabilia, setMemorabilia] = useState(false);
   const [serialNumbered, setSerialNumbered] = useState(false);
+  const [featured, setFeatured] = useState(false);
 
   const [serialNumber, setSerialNumber] = useState("");
 
@@ -136,6 +137,7 @@ export default function AddCardPage() {
           memorabilia,
           serial_numbered: serialNumbered,
           serial_number: serialNumber || null,
+          featured,
 
           grading_company:
             gradingCompany === "Raw"
@@ -215,44 +217,20 @@ export default function AddCardPage() {
 
                 <select
                   value={sport}
-                  onChange={(e) =>
-                    setSport(e.target.value)
-                  }
+                  onChange={(e) => setSport(e.target.value)}
                   className="mt-2 w-full rounded-lg border bg-white px-4 py-3"
                 >
-                  <option value="">
-                    Select sport
-                  </option>
-                  <option value="Football">
-                    Football
-                  </option>
-                  <option value="Baseball">
-                    Baseball
-                  </option>
-                  <option value="Basketball">
-                    Basketball
-                  </option>
-                  <option value="Hockey">
-                    Hockey
-                  </option>
-                  <option value="Soccer">
-                    Soccer
-                  </option>
-                  <option value="Golf">
-                    Golf
-                  </option>
-                  <option value="Racing">
-                    Racing
-                  </option>
-                  <option value="UFC">
-                    UFC
-                  </option>
-                  <option value="Pokemon">
-                    Pokémon
-                  </option>
-                  <option value="Other">
-                    Other
-                  </option>
+                  <option value="">Select sport</option>
+                  <option value="Football">Football</option>
+                  <option value="Baseball">Baseball</option>
+                  <option value="Basketball">Basketball</option>
+                  <option value="Hockey">Hockey</option>
+                  <option value="Soccer">Soccer</option>
+                  <option value="Golf">Golf</option>
+                  <option value="Racing">Racing</option>
+                  <option value="UFC">UFC</option>
+                  <option value="Pokemon">Pokémon</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
 
@@ -263,9 +241,7 @@ export default function AddCardPage() {
 
                 <input
                   value={player}
-                  onChange={(e) =>
-                    setPlayer(e.target.value)
-                  }
+                  onChange={(e) => setPlayer(e.target.value)}
                   className="mt-2 w-full rounded-lg border px-4 py-3"
                   required
                 />
@@ -278,9 +254,7 @@ export default function AddCardPage() {
 
                 <input
                   value={team}
-                  onChange={(e) =>
-                    setTeam(e.target.value)
-                  }
+                  onChange={(e) => setTeam(e.target.value)}
                   className="mt-2 w-full rounded-lg border px-4 py-3"
                   required
                 />
@@ -294,9 +268,7 @@ export default function AddCardPage() {
                 <input
                   type="number"
                   value={year}
-                  onChange={(e) =>
-                    setYear(e.target.value)
-                  }
+                  onChange={(e) => setYear(e.target.value)}
                   className="mt-2 w-full rounded-lg border px-4 py-3"
                   required
                 />
@@ -309,9 +281,7 @@ export default function AddCardPage() {
 
                 <input
                   value={manufacturer}
-                  onChange={(e) =>
-                    setManufacturer(e.target.value)
-                  }
+                  onChange={(e) => setManufacturer(e.target.value)}
                   placeholder="Topps, Panini, Upper Deck..."
                   className="mt-2 w-full rounded-lg border px-4 py-3"
                 />
@@ -324,9 +294,7 @@ export default function AddCardPage() {
 
                 <input
                   value={cardSet}
-                  onChange={(e) =>
-                    setCardSet(e.target.value)
-                  }
+                  onChange={(e) => setCardSet(e.target.value)}
                   className="mt-2 w-full rounded-lg border px-4 py-3"
                   required
                 />
@@ -339,9 +307,7 @@ export default function AddCardPage() {
 
                 <input
                   value={cardNumber}
-                  onChange={(e) =>
-                    setCardNumber(e.target.value)
-                  }
+                  onChange={(e) => setCardNumber(e.target.value)}
                   className="mt-2 w-full rounded-lg border px-4 py-3"
                 />
               </div>
@@ -353,9 +319,7 @@ export default function AddCardPage() {
 
                 <input
                   value={parallel}
-                  onChange={(e) =>
-                    setParallel(e.target.value)
-                  }
+                  onChange={(e) => setParallel(e.target.value)}
                   placeholder="Silver, Gold, Blue Ice..."
                   className="mt-2 w-full rounded-lg border px-4 py-3"
                 />
@@ -369,34 +333,72 @@ export default function AddCardPage() {
             </h2>
 
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
-              {[
-                ["Rookie Card", rookie, setRookie],
-                ["Autograph", autograph, setAutograph],
-                ["Vintage", vintage, setVintage],
-                ["Rare Insert", rareInsert, setRareInsert],
-                ["Memorabilia / Patch", memorabilia, setMemorabilia],
-                ["Serial Numbered", serialNumbered, setSerialNumbered],
-              ].map(([label, value, setter]) => {
-                const typedSetter = setter as React.Dispatch<
-                  React.SetStateAction<boolean>
-                >;
+              <label className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={rookie}
+                  onChange={(e) => setRookie(e.target.checked)}
+                />
+                Rookie Card
+              </label>
 
-                return (
-                  <label
-                    key={String(label)}
-                    className="flex items-center gap-3"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={Boolean(value)}
-                      onChange={(e) =>
-                        typedSetter(e.target.checked)
-                      }
-                    />
-                    {String(label)}
-                  </label>
-                );
-              })}
+              <label className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={autograph}
+                  onChange={(e) => setAutograph(e.target.checked)}
+                />
+                Autograph
+              </label>
+
+              <label className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={vintage}
+                  onChange={(e) => setVintage(e.target.checked)}
+                />
+                Vintage
+              </label>
+
+              <label className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={rareInsert}
+                  onChange={(e) => setRareInsert(e.target.checked)}
+                />
+                Rare Insert
+              </label>
+
+              <label className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={memorabilia}
+                  onChange={(e) => setMemorabilia(e.target.checked)}
+                />
+                Memorabilia / Patch
+              </label>
+
+              <label className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={serialNumbered}
+                  onChange={(e) =>
+                    setSerialNumbered(e.target.checked)
+                  }
+                />
+                Serial Numbered
+              </label>
+
+              <label className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={featured}
+                  onChange={(e) =>
+                    setFeatured(e.target.checked)
+                  }
+                />
+                Featured Card
+              </label>
             </div>
 
             {serialNumbered && (
@@ -440,9 +442,7 @@ export default function AddCardPage() {
                   <option value="BGS">BGS</option>
                   <option value="SGC">SGC</option>
                   <option value="CGC">CGC</option>
-                  <option value="Other">
-                    Other
-                  </option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
 
@@ -453,9 +453,7 @@ export default function AddCardPage() {
 
                 <input
                   value={grade}
-                  onChange={(e) =>
-                    setGrade(e.target.value)
-                  }
+                  onChange={(e) => setGrade(e.target.value)}
                   placeholder="Raw, 10, 9.5..."
                   className="mt-2 w-full rounded-lg border px-4 py-3"
                   required
@@ -470,9 +468,7 @@ export default function AddCardPage() {
                 <input
                   value={certificationNumber}
                   onChange={(e) =>
-                    setCertificationNumber(
-                      e.target.value
-                    )
+                    setCertificationNumber(e.target.value)
                   }
                   className="mt-2 w-full rounded-lg border px-4 py-3"
                 />
@@ -513,9 +509,7 @@ export default function AddCardPage() {
                   step="0.01"
                   min="0"
                   value={price}
-                  onChange={(e) =>
-                    setPrice(e.target.value)
-                  }
+                  onChange={(e) => setPrice(e.target.value)}
                   className="mt-2 w-full rounded-lg border px-4 py-3"
                   required
                 />
@@ -553,21 +547,13 @@ export default function AddCardPage() {
 
                 <select
                   value={owner}
-                  onChange={(e) =>
-                    setOwner(e.target.value)
-                  }
+                  onChange={(e) => setOwner(e.target.value)}
                   className="mt-2 w-full rounded-lg border bg-white px-4 py-3"
                 >
-                  <option value="">
-                    Select owner
-                  </option>
+                  <option value="">Select owner</option>
                   <option value="AJ">AJ</option>
-                  <option value="Casey">
-                    Casey
-                  </option>
-                  <option value="Bogar">
-                    Bogar
-                  </option>
+                  <option value="Casey">Casey</option>
+                  <option value="Bogar">Bogar</option>
                 </select>
               </div>
 
@@ -578,20 +564,12 @@ export default function AddCardPage() {
 
                 <select
                   value={status}
-                  onChange={(e) =>
-                    setStatus(e.target.value)
-                  }
+                  onChange={(e) => setStatus(e.target.value)}
                   className="mt-2 w-full rounded-lg border bg-white px-4 py-3"
                 >
-                  <option value="Available">
-                    Available
-                  </option>
-                  <option value="Reserved">
-                    Reserved
-                  </option>
-                  <option value="Sold">
-                    Sold
-                  </option>
+                  <option value="Available">Available</option>
+                  <option value="Reserved">Reserved</option>
+                  <option value="Sold">Sold</option>
                 </select>
               </div>
             </div>
@@ -652,16 +630,12 @@ export default function AddCardPage() {
               disabled={saving}
               className="rounded-lg bg-blue-900 px-6 py-3 font-bold text-white hover:bg-blue-800 disabled:opacity-50"
             >
-              {saving
-                ? "Uploading Card..."
-                : "Add Card"}
+              {saving ? "Uploading Card..." : "Add Card"}
             </button>
 
             <button
               type="button"
-              onClick={() =>
-                router.push("/admin")
-              }
+              onClick={() => router.push("/admin")}
               className="rounded-lg border px-6 py-3 font-semibold"
             >
               Cancel

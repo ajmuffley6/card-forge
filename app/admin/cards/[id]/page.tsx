@@ -6,6 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 
 type CardRecord = {
   id: number;
+
   sport: string | null;
   player: string;
   team: string;
@@ -22,6 +23,7 @@ type CardRecord = {
   memorabilia: boolean;
   serial_numbered: boolean;
   serial_number: string | null;
+  featured: boolean;
 
   grading_company: string | null;
   grade: string | null;
@@ -69,6 +71,7 @@ export default function EditCardPage() {
   const [memorabilia, setMemorabilia] = useState(false);
   const [serialNumbered, setSerialNumbered] = useState(false);
   const [serialNumber, setSerialNumber] = useState("");
+  const [featured, setFeatured] = useState(false);
 
   const [gradingCompany, setGradingCompany] = useState("Raw");
   const [grade, setGrade] = useState("Raw");
@@ -84,8 +87,12 @@ export default function EditCardPage() {
   const [currentFrontImage, setCurrentFrontImage] = useState("");
   const [currentBackImage, setCurrentBackImage] = useState("");
 
-  const [newFrontImage, setNewFrontImage] = useState<File | null>(null);
-  const [newBackImage, setNewBackImage] = useState<File | null>(null);
+  const [newFrontImage, setNewFrontImage] = useState<File | null>(
+    null
+  );
+  const [newBackImage, setNewBackImage] = useState<File | null>(
+    null
+  );
 
   useEffect(() => {
     async function loadCard() {
@@ -133,10 +140,13 @@ export default function EditCardPage() {
       setMemorabilia(Boolean(card.memorabilia));
       setSerialNumbered(Boolean(card.serial_numbered));
       setSerialNumber(card.serial_number ?? "");
+      setFeatured(Boolean(card.featured));
 
       setGradingCompany(card.grading_company ?? "Raw");
       setGrade(card.grade ?? "Raw");
-      setCertificationNumber(card.certification_number ?? "");
+      setCertificationNumber(
+        card.certification_number ?? ""
+      );
 
       setPurchasePrice(
         card.purchase_price == null
@@ -247,6 +257,7 @@ export default function EditCardPage() {
           memorabilia,
           serial_numbered: serialNumbered,
           serial_number: serialNumber || null,
+          featured,
 
           grading_company:
             gradingCompany === "Raw"
@@ -341,39 +352,17 @@ export default function EditCardPage() {
                   }
                   className="mt-2 w-full rounded-lg border bg-white px-4 py-3"
                 >
-                  <option value="">
-                    Select sport
-                  </option>
-                  <option value="Football">
-                    Football
-                  </option>
-                  <option value="Baseball">
-                    Baseball
-                  </option>
-                  <option value="Basketball">
-                    Basketball
-                  </option>
-                  <option value="Hockey">
-                    Hockey
-                  </option>
-                  <option value="Soccer">
-                    Soccer
-                  </option>
-                  <option value="Golf">
-                    Golf
-                  </option>
-                  <option value="Racing">
-                    Racing
-                  </option>
-                  <option value="UFC">
-                    UFC
-                  </option>
-                  <option value="Pokemon">
-                    Pokémon
-                  </option>
-                  <option value="Other">
-                    Other
-                  </option>
+                  <option value="">Select sport</option>
+                  <option value="Football">Football</option>
+                  <option value="Baseball">Baseball</option>
+                  <option value="Basketball">Basketball</option>
+                  <option value="Hockey">Hockey</option>
+                  <option value="Soccer">Soccer</option>
+                  <option value="Golf">Golf</option>
+                  <option value="Racing">Racing</option>
+                  <option value="UFC">UFC</option>
+                  <option value="Pokemon">Pokémon</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
 
@@ -553,6 +542,17 @@ export default function EditCardPage() {
                 />
                 Serial Numbered
               </label>
+
+              <label className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={featured}
+                  onChange={(e) =>
+                    setFeatured(e.target.checked)
+                  }
+                />
+                Featured Card
+              </label>
             </div>
 
             {serialNumbered && (
@@ -591,24 +591,12 @@ export default function EditCardPage() {
                   }
                   className="mt-2 w-full rounded-lg border bg-white px-4 py-3"
                 >
-                  <option value="Raw">
-                    Raw
-                  </option>
-                  <option value="PSA">
-                    PSA
-                  </option>
-                  <option value="BGS">
-                    BGS
-                  </option>
-                  <option value="SGC">
-                    SGC
-                  </option>
-                  <option value="CGC">
-                    CGC
-                  </option>
-                  <option value="Other">
-                    Other
-                  </option>
+                  <option value="Raw">Raw</option>
+                  <option value="PSA">PSA</option>
+                  <option value="BGS">BGS</option>
+                  <option value="SGC">SGC</option>
+                  <option value="CGC">CGC</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
 
@@ -721,18 +709,10 @@ export default function EditCardPage() {
                   }
                   className="mt-2 w-full rounded-lg border bg-white px-4 py-3"
                 >
-                  <option value="">
-                    Select owner
-                  </option>
-                  <option value="AJ">
-                    AJ
-                  </option>
-                  <option value="Casey">
-                    Casey
-                  </option>
-                  <option value="Bogar">
-                    Bogar
-                  </option>
+                  <option value="">Select owner</option>
+                  <option value="AJ">AJ</option>
+                  <option value="Casey">Casey</option>
+                  <option value="Bogar">Bogar</option>
                 </select>
               </div>
 
@@ -848,9 +828,7 @@ export default function EditCardPage() {
               disabled={saving}
               className="rounded-lg bg-blue-900 px-6 py-3 font-bold text-white hover:bg-blue-800 disabled:opacity-50"
             >
-              {saving
-                ? "Saving..."
-                : "Save Changes"}
+              {saving ? "Saving..." : "Save Changes"}
             </button>
 
             <button

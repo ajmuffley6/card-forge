@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import CardImageViewer from "@/components/CardImageViewer";
+import MakeOfferForm from "@/components/MakeOfferForm";
 
 export default async function CardDetailPage({
   params,
@@ -76,14 +77,27 @@ export default async function CardDetailPage({
 
             <p className="mt-8 text-4xl font-bold">
               $
-              {Number(card.price ?? 0).toLocaleString(
-                undefined,
-                {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                }
-              )}
+              {Number(
+                card.price ?? 0
+              ).toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
             </p>
+
+            <div className="mt-4">
+              <span
+                className={`inline-block rounded-full px-4 py-2 text-sm font-bold text-white ${
+                  card.status === "Sold"
+                    ? "bg-red-700"
+                    : card.status === "Reserved"
+                    ? "bg-amber-500"
+                    : "bg-green-700"
+                }`}
+              >
+                {card.status || "Available"}
+              </span>
+            </div>
 
             <div className="mt-8 rounded-xl border bg-white p-6 shadow-sm">
               <h2 className="text-xl font-bold">
@@ -95,7 +109,6 @@ export default async function CardDetailPage({
                   <p className="text-sm text-stone-500">
                     Team
                   </p>
-
                   <p className="font-semibold">
                     {card.team || "—"}
                   </p>
@@ -105,7 +118,6 @@ export default async function CardDetailPage({
                   <p className="text-sm text-stone-500">
                     Card Number
                   </p>
-
                   <p className="font-semibold">
                     {card.card_number || "—"}
                   </p>
@@ -115,7 +127,6 @@ export default async function CardDetailPage({
                   <p className="text-sm text-stone-500">
                     Manufacturer
                   </p>
-
                   <p className="font-semibold">
                     {card.manufacturer || "—"}
                   </p>
@@ -125,7 +136,6 @@ export default async function CardDetailPage({
                   <p className="text-sm text-stone-500">
                     Parallel
                   </p>
-
                   <p className="font-semibold">
                     {card.parallel || "—"}
                   </p>
@@ -135,7 +145,6 @@ export default async function CardDetailPage({
                   <p className="text-sm text-stone-500">
                     Grade
                   </p>
-
                   <p className="font-semibold">
                     {card.grade || "Raw"}
                   </p>
@@ -145,7 +154,6 @@ export default async function CardDetailPage({
                   <p className="text-sm text-stone-500">
                     Grading Company
                   </p>
-
                   <p className="font-semibold">
                     {card.grading_company || "Raw"}
                   </p>
@@ -155,7 +163,6 @@ export default async function CardDetailPage({
                   <p className="text-sm text-stone-500">
                     Serial Number
                   </p>
-
                   <p className="font-semibold">
                     {card.serial_number || "—"}
                   </p>
@@ -165,7 +172,6 @@ export default async function CardDetailPage({
                   <p className="text-sm text-stone-500">
                     Status
                   </p>
-
                   <p className="font-semibold">
                     {card.status || "Available"}
                   </p>
@@ -211,22 +217,17 @@ export default async function CardDetailPage({
               )}
             </div>
 
-            <div className="mt-8 rounded-xl border bg-white p-6 shadow-sm">
-              <h2 className="text-xl font-bold">
-                Interested in this card?
-              </h2>
-
-              <p className="mt-2 text-stone-600">
-                Purchasing and offer functionality will be added soon.
-              </p>
-
-              <button
-                type="button"
-                disabled
-                className="mt-5 w-full cursor-not-allowed rounded-lg bg-blue-900 px-6 py-3 font-bold text-white opacity-60"
-              >
-                Buy Now — Coming Soon
-              </button>
+            <div className="mt-8">
+              <MakeOfferForm
+                cardId={card.id}
+                askingPrice={Number(card.price ?? 0)}
+                minimumOffer={
+                  card.minimum_offer == null
+                    ? null
+                    : Number(card.minimum_offer)
+                }
+                status={card.status || "Available"}
+              />
             </div>
           </div>
         </div>
